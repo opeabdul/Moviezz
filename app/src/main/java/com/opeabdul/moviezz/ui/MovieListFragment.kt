@@ -5,13 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.opeabdul.moviezz.Injection
 import com.opeabdul.moviezz.R
 import com.opeabdul.moviezz.data.MovieRepository
 import com.opeabdul.moviezz.data.RemoteDataSource
 import com.opeabdul.moviezz.databinding.FragmentMovieListBinding
+import com.opeabdul.moviezz.model.Movie
 import com.opeabdul.moviezz.remote.MovieService
+import com.opeabdul.moviezz.ui.adapters.MovieClickListener
 import com.opeabdul.moviezz.ui.adapters.MovieListAdapter
 
 // TODO: Rename parameter arguments, choose names that match
@@ -51,14 +54,19 @@ class MovieListFragment : Fragment() {
         return fragmentMovieListBinding.root
     }
 
-    fun initViews(){
+    private fun initViews(){
         movieListViewModel = Injection.provideViewModelFactory().create(MovieListViewModel::class.java)
         fragmentMovieListBinding.lifecycleOwner = this
         fragmentMovieListBinding.viewmodel = movieListViewModel
-        adapter = MovieListAdapter()
+        adapter = MovieListAdapter(object : MovieClickListener {
+            override fun viewMovie(movie: Movie) {
+                val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movie)
+                findNavController().navigate(action)
+            }
+        })
         fragmentMovieListBinding.newJobsRv.apply {
+            layoutManager = GridLayoutManager(activity, 2)
             adapter = adapter
-            layoutManager = GridLayoutManager(this, 2)
         }
 
     }

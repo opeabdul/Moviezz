@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.opeabdul.moviezz.databinding.MovieItemBinding
 import com.opeabdul.moviezz.model.Movie
 
-class MovieListAdapter: ListAdapter<Movie, MovieListAdapter.MovieListViewHolder>(DiffUtilCallBack()) {
+class MovieListAdapter(val movieClickListener: MovieClickListener): ListAdapter<Movie, MovieListAdapter.MovieListViewHolder>(DiffUtilCallBack()) {
 
     class MovieListViewHolder(val binding: MovieItemBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(movie:Movie){
+        fun bind(movie:Movie, movieClickListener: MovieClickListener){
             binding.movie = movie
+            binding.clickListener = movieClickListener
             binding.executePendingBindings()
         }
 
@@ -24,7 +25,7 @@ class MovieListAdapter: ListAdapter<Movie, MovieListAdapter.MovieListViewHolder>
     }
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), movieClickListener)
     }
 }
 
@@ -37,4 +38,8 @@ class DiffUtilCallBack: DiffUtil.ItemCallback<Movie>(){
         return oldItem == newItem
     }
 
+}
+
+interface MovieClickListener{
+    fun viewMovie(movie: Movie)
 }

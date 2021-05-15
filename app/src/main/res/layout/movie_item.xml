@@ -6,12 +6,17 @@
     <variable
         name="movie"
         type="com.opeabdul.moviezz.model.Movie" />
+
+    <variable
+        name="clickListener"
+        type="com.opeabdul.moviezz.ui.adapters.MovieClickListener" />
 </data>
 
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardUseCompatPadding="true"
+    android:onClick="@{() -> clickListener.viewMovie(movie)}"
     app:cardCornerRadius="@dimen/card_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout

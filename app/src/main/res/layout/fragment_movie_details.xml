@@ -1,14 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context=".ui.MovieDetailsFragment">
+
+<data>
+    <variable
+        name="movie"
+        type="com.opeabdul.moviezz.model.Movie" />
+</data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MovieDetailsFragment">
+    android:padding="20dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/movie_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="@{movie.title}"
+        tools:text="Legend of the seeker"
+        android:textColor="@color/purple_700"
+        android:textSize="26sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/movie_overview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@{movie.overview}"
+        tools:text="Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem."
+        android:textColor="@color/purple_700"
+        android:textSize="14.0sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movie_title"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/movie_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:loadImg="@{movie.posterPath}"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_overview"
+            />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.5"
+        android:orientation="vertical"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/release_date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="Release Date"
+        android:textColor="@color/purple_700"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/movie_image"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/movie_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@{movie.releaseDate}"
+        tools:text="1995-10-20"
+        android:textColor="@color/purple_700"
+        android:textSize="14.0sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/release_date_title"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/popularity_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="Popularity"
+        android:textColor="@color/purple_700"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/movie_release_date"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/popularity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        tools:text="19.998"
+        android:text="@{String.valueOf(movie.popularity)}"
+        android:textColor="@color/purple_700"
+        android:textSize="14.0sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/popularity_title"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/adult_content_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="Adult Content"
+        android:textColor="@color/purple_700"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/movie_image"
+        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/adult_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        tools:text="Yes"
+        android:text="@{String.valueOf(movie.adult)}"
+        android:textColor="@color/purple_700"
+        android:textSize="14.0sp"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/adult_content_title"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/rating_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="Rating"
+        android:textColor="@color/purple_700"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/adult_content"
+        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/rating_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@{String.valueOf(movie.voteAverage)}"
+        tools:text="9.8"
+        android:textColor="@color/purple_700"
+        android:textSize="14.0sp"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/rating_title"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
