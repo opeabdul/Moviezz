@@ -1,7 +1,8 @@
-package com.opeabdul.moviezz
+package com.opeabdul.moviezz.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.opeabdul.moviezz.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
