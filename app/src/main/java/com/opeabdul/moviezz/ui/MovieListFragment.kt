@@ -34,7 +34,7 @@ class MovieListFragment : Fragment() {
 
     private lateinit var fragmentMovieListBinding: FragmentMovieListBinding
     private lateinit var movieListViewModel: MovieListViewModel
-    private lateinit var adapter: MovieListAdapter
+    private lateinit var movieListAdapter: MovieListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,17 +57,17 @@ class MovieListFragment : Fragment() {
     private fun initViews(){
         movieListViewModel = Injection.provideViewModelFactory().create(MovieListViewModel::class.java)
         fragmentMovieListBinding.lifecycleOwner = this
-        fragmentMovieListBinding.viewmodel = movieListViewModel
-        adapter = MovieListAdapter(object : MovieClickListener {
+        movieListAdapter = MovieListAdapter(object : MovieClickListener {
             override fun viewMovie(movie: Movie) {
                 val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movie)
                 findNavController().navigate(action)
             }
         })
         fragmentMovieListBinding.newJobsRv.apply {
+            adapter = movieListAdapter
             layoutManager = GridLayoutManager(activity, 2)
-            adapter = adapter
         }
+        fragmentMovieListBinding.viewmodel = movieListViewModel
 
     }
 

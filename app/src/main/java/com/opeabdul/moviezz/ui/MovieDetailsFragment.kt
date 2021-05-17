@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.opeabdul.moviezz.R
+import com.opeabdul.moviezz.databinding.FragmentMovieDetailsBinding
+import com.opeabdul.moviezz.model.Movie
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +24,9 @@ class MovieDetailsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var movieDetailsViewModel: MovieDetailsViewModel
+    private lateinit var binding: FragmentMovieDetailsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,8 +39,12 @@ class MovieDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie_details, container, false)
+
+        binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        movieDetailsViewModel = MovieDetailsViewModelFactory(arguments?.getParcelable<Movie>("movie")!!).create(MovieDetailsViewModel::class.java)
+        binding.viewmodel = movieDetailsViewModel
+        return binding.root
     }
 
     companion object {
