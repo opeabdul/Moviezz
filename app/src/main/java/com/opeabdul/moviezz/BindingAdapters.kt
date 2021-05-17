@@ -4,8 +4,6 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.LiveData
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.opeabdul.moviezz.model.Movie
