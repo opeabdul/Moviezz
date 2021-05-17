@@ -4,6 +4,8 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.opeabdul.moviezz.model.Movie
@@ -31,7 +33,7 @@ fun showProgressbar(view: View, data: List<Any>?){
 }
 
 @BindingAdapter("emptyStateVisibility")
-fun showEmptyState(cardView: CardView, data: List<Any>?){
+fun showEmptyState(cardView: CardView, data: List<Movie>?){
     cardView.visibility = when(data){
         null -> View.GONE
         else -> if(data.isEmpty()) View.VISIBLE else View.GONE

@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.opeabdul.moviezz.Injection
 import com.opeabdul.moviezz.R
@@ -55,7 +57,7 @@ class MovieListFragment : Fragment() {
     }
 
     private fun initViews(){
-        movieListViewModel = Injection.provideViewModelFactory().create(MovieListViewModel::class.java)
+        movieListViewModel = Injection.provideViewModelFactory(requireContext()).create(MovieListViewModel::class.java)
         fragmentMovieListBinding.lifecycleOwner = this
         movieListAdapter = MovieListAdapter(object : MovieClickListener {
             override fun viewMovie(movie: Movie) {
@@ -63,11 +65,15 @@ class MovieListFragment : Fragment() {
                 findNavController().navigate(action)
             }
         })
+        movieListViewModel.topRatedMovieList.observe(requireActivity(),
+            { t -> movieListAdapter.submitList(t) })
         fragmentMovieListBinding.newJobsRv.apply {
             adapter = movieListAdapter
             layoutManager = GridLayoutManager(activity, 2)
         }
+
         fragmentMovieListBinding.viewmodel = movieListViewModel
+
 
     }
 

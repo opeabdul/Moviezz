@@ -9,35 +9,27 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import javax.xml.transform.TransformerFactory
 
 class MovieListViewModel(private val repository: MovieRepository): ViewModel() {
 
 
     private var job: Job? = null
 
-    private val _movieResponseLiveData = MutableLiveData<MovieResponse>()
-    val movieResponseLiveData: LiveData<MovieResponse?>
-        get() = _movieResponseLiveData
-
-    val topRatedMovieList: LiveData<List<Movie>?> = Transformations.map(movieResponseLiveData){ it ->
-        it?.movies
-    }
+    val topRatedMovieList: LiveData<List<Movie>> = repository.getAllRatedMovies(false)
 
     init {
-        getTopRatedMovies()
+        getTopRatedMovies(true)
     }
 
-    init {
-            getTopRatedMovies()
-    }
-
-    fun getTopRatedMovies(){
+    fun getTopRatedMovies(refreshFromServer: Boolean){
         job?.cancel()
+
         job = viewModelScope.launch {
             try{
-                _movieResponseLiveData.value = repository.getTopRatedMovies(true)
+                repository.getTopRatedMoviesAndSaveData()
             }catch (e: IOException){
-                _movieResponseLiveData.postValue(null)
+
             }
         }
     }

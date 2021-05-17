@@ -16,9 +16,12 @@
 
 package com.opeabdul.moviezz
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
+import com.opeabdul.moviezz.data.LocalDataSource
 import com.opeabdul.moviezz.data.MovieRepository
 import com.opeabdul.moviezz.data.RemoteDataSource
+import com.opeabdul.moviezz.db.MovieDatabase
 import com.opeabdul.moviezz.remote.MovieService
 import com.opeabdul.moviezz.ui.ViewModelFactory
 import java.util.concurrent.Executors
@@ -26,11 +29,12 @@ import java.util.concurrent.Executors
 
 object Injection {
 
-    private fun provideGithubRepository(): MovieRepository {
-        return MovieRepository(RemoteDataSource(MovieService.create()))
+    private fun provideGithubRepository(context: Context): MovieRepository {
+        return MovieRepository.getInstance(context)
     }
 
-    fun provideViewModelFactory(): ViewModelProvider.Factory {
-        return ViewModelFactory(provideGithubRepository())
+    fun provideViewModelFactory(context: Context): ViewModelProvider.Factory {
+        return ViewModelFactory(provideGithubRepository(context))
     }
+
 }
